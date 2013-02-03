@@ -12,10 +12,12 @@ get "/" do
   content_type 'html'
   erb :index
 end
+
 get "/tasks" do
   @tasks = Task.all
   @tasks.to_json
 end
+
 post "/tasks/new" do
   @task = Task.new
   @task.complete = false
@@ -23,6 +25,7 @@ post "/tasks/new" do
   @task.created_at = DateTime.now
   @task.updated_at = null
 end
+
 put "/tasks/:id" do
   @task = Task.find(params[:id])
   @task.complete = params[:complete]
@@ -34,6 +37,7 @@ put "/tasks/:id" do
     {:task => @task, :status => "failure"}.to_json
   end
 end
+
 delete "/tasks/:id" do
   @task = Task.find(params[:id])
   if @task.destroy
